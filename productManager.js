@@ -1,115 +1,103 @@
-class ProductManager {
+import fs from "fs";
+import { Blob } from "buffer";
+
+export default class ProductManager {
   constructor() {
-    this.products = [];
+    this.path = "./files/products.json";
   }
 
-  getProducts = () => {
-    return this.products;
-  };
-
-  addProduct = (title, description, price, thumbnail, code, stock) => {
-    const productIndex = this.products.findIndex(
-      (product) => product.code === code
-    );
-
-    if (productIndex === -1) {
-      const product = {
-        id: this.products.length + 1,
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
-      };
-      this.products.push(product);
-      console.log(`Product with code ${code} added successfully`);
+  getProducts = async () => {
+    if (fs.existsSync(this.path)) {
+      const productData = await fs.promises.readFile(this.path, "utf-8");
+      const size = new Blob([productData]).size;
+      if (size > 0) {
+        const parsedProducts = JSON.parse(productData);
+        console.log(parsedProducts);
+        return parsedProducts;
+      } else {
+        return [];
+      }
     } else {
-      console.log(`Error: Product with code ${code} already exists`);
+      return [];
     }
   };
 
-  getProducts = () => {
-    console.log(this.products);
-    return this.products;
+  addProduct = async (product) => {
+    const products = await this.getProducts();
+
+    if (
+      !product.title ||
+      !product.description ||
+      !product.price ||
+      !product.thumbnail ||
+      !product.code ||
+      !product.stock
+    ) {
+      console.log("Error: All fields are mandatory");
+      return;
+    }
+
+    const productIndex = await products.findIndex(
+      (prod) => prod.code === product.code
+    );
+
+    if (productIndex === -1) {
+      if (products.length === 0) {
+        product.id = 1;
+      } else {
+        product.id = products[products.length - 1].id + 1;
+      }
+      products.push(product);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+      console.log(`Product with code ${product.code} added successfully`);
+    } else {
+      console.log(`Error: Product with code ${product.code} already exists`);
+    }
   };
 
-  getProductById = (productId) => {
-    const productIdFound = this.products.findIndex(
-      (prod) => prod.id === productId
-    );
+  getProductById = async (productId) => {
+    const products = await this.getProducts();
+    const productIdFound = products.findIndex((prod) => prod.id === productId);
     if (productIdFound === -1) {
       console.log(`Error: Product with ID ${productId} was not found`);
     } else {
       console.log(`Info on product with Product ID ${productId}:`);
-      console.log(this.products[productIdFound]);
+      console.log(products[productIdFound]);
+    }
+  };
+
+  updateProduct = async (productId, updatingKey, updateValue) => {
+    const products = await this.getProducts();
+    const productIdFound = products.findIndex((prod) => prod.id === productId);
+    if (productIdFound === -1) {
+      console.log(`Update error: Product with ID ${productId} was not found`);
+    } else {
+      products[productIdFound][updatingKey] = updateValue;
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+      console.log(`Product with ID ${productId} was updated successfully`);
+    }
+  };
+
+  deleteProduct = async (productId) => {
+    const products = await this.getProducts();
+    const productIdFound = products.findIndex((prod) => prod.id === productId);
+    if (productIdFound === -1) {
+      console.log(`Delete error: Product with ID ${productId} was not found`);
+    } else {
+      console.log(
+        `Product with Product ID ${productId} was successfully deleted.`
+      );
+      products.splice(productIdFound, 1);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
     }
   };
 }
-
-// // testing // //
-
-let products = new ProductManager();
-
-products.getProducts(); // Empty array
-
-products.addProduct("test"); // Missing fields
-products.addProduct(
-  "test product",
-  "this is a test product",
-  200,
-  "No image",
-  "abc123"
-); // Missing fields
-products.addProduct("this is a test product", 200, "No image", "abc123", 25); // Missing fields
-products.addProduct(200, "No image", "abc123", 25); // Missing fields
-products.addProduct(
-  "test product",
-  "this is a test product",
-  200,
-  "No image",
-  "abc123",
-  25
-); // Product 1
-products.addProduct(
-  "test product",
-  "this is a test product",
-  200,
-  "No image",
-  "abc123",
-  25
-); // Repeated
-products.addProduct(
-  "test product2",
-  "this is a test product2",
-  500,
-  "No image",
-  "bbc123",
-  50
-); // Product 2
-products.addProduct(
-  "test product3",
-  "this is a test product3",
-  700,
-  "No image",
-  "cba123",
-  80
-); // Product 3
-
-products.getProducts();
-
-products.addProduct(
-  "test product",
-  "this is a test product",
-  200,
-  "No image",
-  "bbc123",
-  25
-); // Repeated
-
-products.getProducts();
-
-products.getProductById(8); // Non existant
-products.getProductById(1);
-products.getProductById(3);
-products.getProductById(17); // Non existant
