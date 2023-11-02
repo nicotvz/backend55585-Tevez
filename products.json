@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "title": "AMD Ryzen 5600X",
+    "description": "6 Core AMD Processor",
+    "price": 6000,
+    "thumbnails": ["r7.jpg"],
+    "code": "AMD5600X",
+    "stock": 50,
+    "status": true,
+    "category": "cpu"
+  },
+  {
+    "id": 2,
+    "title": "Intel Core i7 13700K",
+    "description": "8 Core Intel Processor",
+    "price": 8000,
+    "thumbnails": ["i7.png"],
+    "code": "INTEL13700K",
+    "stock": 33,
+    "status": true,
+    "category": "cpu"
+  },
+  {
+    "id": 3,
+    "title": "AMD Ryzen 5950X",
+    "description": "16 Core AMD Processor",
+    "price": 16000,
+    "thumbnails": ["r9.jpg"],
+    "code": "AMD5950X",
+    "stock": 10,
+    "status": true,
+    "category": "cpu"
+  },
+  {
+    "id": 4,
+    "title": "Intel Core i9 13900K",
+    "description": "14 Core Intel Processor",
+    "price": 15000,
+    "thumbnails": ["i9.png"],
+    "code": "INTEL13900K",
+    "stock": 16,
+    "status": true,
+    "category": "cpu"
+  },
+  {
+    "id": 5,
+    "title": "Nvidia RTX 2060 Super",
+    "description": "Mid-end Nvidia Gaming GPU",
+    "price": 10000,
+    "thumbnail": "No image",
+    "code": "RTX2060",
+    "stock": 39,
+    "status": true,
+    "category": "gpu"
+  },
+  {
+    "id": 6,
+    "title": "AMD Radeon 6600XT",
+    "description": "Mid-end Radeon Gaming GPU",
+    "price": 12000,
+    "thumbnail": "No image",
+    "code": "RADEON6600XT",
+    "stock": 47,
+    "status": true,
+    "category": "gpu"
+  },
+  {
+    "id": 7,
+    "title": "Nvidia RTX 3080Ti",
+    "description": "High-end Nvidia Gaming GPU",
+    "price": 22000,
+    "thumbnail": "No image",
+    "code": "RTX3080TI",
+    "stock": 28,
+    "status": true,
+    "category": "gpu"
+  },
+  {
+    "id": 8,
+    "title": "AMD Radeon 6950XT",
+    "description": "High-end Radeon Gaming GPU",
+    "price": 20000,
+    "thumbnail": "No image",
+    "code": "RADEON6950XT",
+    "stock": 13,
+    "status": true,
+    "category": "gpu"
+  },
+  {
+    "id": 9,
+    "title": "Nvidia RTX 4090",
+    "description": "Enthusiast Nvidia Gaming GPU",
+    "price": 52000,
+    "thumbnail": "No image",
+    "code": "RTX4090",
+    "stock": 4,
+    "status": true,
+    "category": "gpu"
+  },
+  {
+    "id": 10,
+    "title": "AMD Radeon 7900XT",
+    "description": "Enthusiast Radeon Gaming GPU",
+    "price": 45000,
+    "thumbnail": "No image",
+    "code": "RADEON7900XT",
+    "stock": 8,
+    "status": true,
+    "category": "gpu"
+  }
+]

@@ -1,134 +1,108 @@
 import fs from "fs";
-import { Blob } from "buffer";
-
-export default class ProductManager {
-  constructor() {
-    this.dir = "./files";
-    this.path = "./files/products.json";
+import { io } from "./app.js";
+class ProductManager {
+  constructor(path) {
+    this.products = [];
+    this.path = path;
   }
 
-  getProducts = async (logProducts) => {
+  async addProduct(product) {
+    const products = await this.getProducts();
+
+    const productsLength = products.length;
+
+    const { title, description, price, thumbnails, code, stock, category } =
+      product;
+
+    const newproduct = {
+      id: productsLength > 0 ? products[productsLength - 1].id + 1 : 1,
+      title: title,
+      description: description,
+      price: Number(price),
+      thumbnails: thumbnails ?? [],
+      code: code,
+      stock: Number(stock),
+      status: true,
+      category: category,
+    };
+
+    products.push(newproduct);
+
     try {
-      if (!fs.existsSync(this.dir)) {
-        fs.mkdirSync(this.dir);
-      }
-      if (fs.existsSync(this.path)) {
-        const productData = await fs.promises.readFile(this.path, "utf-8");
-        const size = new Blob([productData]).size;
-        if (size > 0) {
-          const parsedProducts = JSON.parse(productData);
-          if (logProducts === "log") {
-            console.table(parsedProducts);
-          }
-          return parsedProducts;
-        } else {
-          return [];
-        }
-      } else {
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  addProduct = async (product) => {
-    try {
-      const products = await this.getProducts();
-
-      if (
-        !product.title ||
-        !product.description ||
-        !product.price ||
-        !product.thumbnail ||
-        !product.code ||
-        !product.stock
-      ) {
-        throw new Error("All fields are mandatory");
-      }
-
-      const productIndex = await products.findIndex(
-        (prod) => prod.code === product.code
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
       );
-
-      if (productIndex === -1) {
-        products.length === 0
-          ? (product.id = 1)
-          : (product.id = products[products.length - 1].id + 1);
-        products.push(product);
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(products, null, "\t")
-        );
-        console.log(`Product with code ${product.code} added successfully`);
-      } else {
-        throw new Error(
-          `Add: Product with code ${product.code} already exists`
-        );
-      }
+      io.emit("newP", newproduct);
     } catch (error) {
-      console.log(error);
+      return error;
     }
-  };
+  }
 
-  getProductById = async (productId) => {
+  async getProducts() {
     try {
-      const products = await this.getProducts();
-      const productIdFound = products.findIndex(
-        (prod) => prod.id === productId
-      );
-      if (productIdFound !== -1) {
-        console.log(`Info on product with Product ID ${productId}:`);
-        console.log(products[productIdFound]);
-      } else {
-        throw new Error(`Get: Product with ID ${productId} was not found`);
-      }
+      const products = await fs.promises.readFile(this.path, "utf-8");
+      return JSON.parse(products);
     } catch (error) {
-      console.log(error);
+      return this.products;
     }
-  };
+  }
 
-  updateProduct = async (productId, updatingKey, updateValue) => {
-    try {
-      const products = await this.getProducts();
-      const productIdFound = products.findIndex(
-        (prod) => prod.id === productId
-      );
-      if (productIdFound !== -1) {
-        products[productIdFound][updatingKey] = updateValue;
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(products, null, "\t")
-        );
-        console.log(`Product with ID ${productId} was updated successfully`);
-      } else {
-        throw new Error(`Update: Product with ID ${productId} was not found`);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  async getProductById(id) {
+    const products = await this.getProducts();
 
-  deleteProduct = async (productId) => {
-    try {
-      const products = await this.getProducts();
-      const productIdFound = products.findIndex(
-        (prod) => prod.id === productId
-      );
-      if (productIdFound !== -1) {
-        products.splice(productIdFound, 1);
-        await fs.promises.writeFile(
-          this.path,
-          JSON.stringify(products, null, "\t")
-        );
-        console.log(
-          `Product with Product ID ${productId} was successfully deleted.`
-        );
-      } else {
-        throw new Error(`Delete: Product with ID ${productId} was not found`);
-      }
-    } catch (error) {
-      console.log(error);
+    const search = products.find((product) => product.id === id);
+
+    return search;
+  }
+
+  async deletProduct(id) {
+    const products = await this.getProducts();
+
+    const productForDelete = products.findIndex((product) => product.id == id);
+
+    if (productForDelete == -1) {
+      return "not found";
     }
-  };
+
+    try {
+      products.splice(productForDelete, 1);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+      io.emit("deletProduct", products);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async updateProduct(id, prod) {
+    const products = await this.getProducts();
+
+    for (let key in products) {
+      if (products[key].id == id) {
+        products[key].title = prod.title ? prod.title : products[key].title;
+        products[key].description = prod.description
+          ? prod.description
+          : products[key].description;
+        products[key].price = prod.price ? prod.price : products[key].price;
+        products[key].thumbnail = prod.thumbnail
+          ? [...products[key].thumbnail, prod.thumbnail]
+          : products[key].thumbnail;
+        products[key].code = prod.code ? prod.code : products[key].code;
+      }
+    }
+
+    try {
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+    } catch (error) {
+      return error;
+    }
+  }
 }
+
+export default ProductManager;

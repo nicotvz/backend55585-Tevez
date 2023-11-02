@@ -1,0 +1,18 @@
+body {
+  background-color: #ccc;
+}
+
+.container-products {
+  border: 5px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+}
+
+#forms {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
