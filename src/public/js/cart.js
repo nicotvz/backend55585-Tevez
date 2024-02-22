@@ -106,7 +106,7 @@ checkoutBtn?.addEventListener("click", (e) => {
             <table cellpadding="0" cellspacing="0" border="0" width="600" style="border-collapse: collapse;">
             <tr>
             <td align="center" bgcolor="#ffffff" style="padding: 40px 0 30px 0;">
-              <img src="https://t4.ftcdn.net/jpg/03/23/05/79/360_F_323057900_LsY7uUAl5qgvVcmFyklp7QipMnWNzX4A.jpg" alt="Logo" width="150">
+              <img src="https://t4.ftcdn.net/jpg/03/23/05/79/360_F_323057900_LsY7uUAl5qgvVcmFyklp7QipMnWNzX4A.jpgG" alt="Logo" width="150">
             </td>
             </tr>
             <tr>

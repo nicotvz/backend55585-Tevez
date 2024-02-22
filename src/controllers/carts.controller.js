@@ -2,7 +2,11 @@ import { cartsService } from "../services/carts.service.js";
 import { ticketsService } from "../services/tickets.service.js";
 
 import CustomError from "../services/errors/CustomError.js";
-import ErrorCodes from "../services/errors/enums.js";
+import {
+  ErrorCodes,
+  ErrorMessages,
+  ErrorNames,
+} from "../services/errors/enums.js";
 import { addToCartErrorInfo } from "../services/errors/info.js";
 
 /////////////////////////
@@ -34,7 +38,7 @@ export const getCartById = async (req, res) => {
       payload: filteredCart,
     });
   } catch (error) {
-    console.log(`Cannot get cart with mongoose ${error}`);
+    req.logger.error(`Cannot get cart with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to get cart",
@@ -68,7 +72,7 @@ export const createTicket = async (req, res) => {
 
     res.status(201).send({ status: "success", payload: newTicket });
   } catch (error) {
-    console.log(`Failed to create ticket with mongoose ${error}`);
+    req.logger.error(`Failed to create ticket with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to create ticket" });
@@ -87,7 +91,7 @@ export const createCart = async (req, res) => {
 
     res.status(201).send({ status: "success", payload: newCart });
   } catch (error) {
-    console.log(`Failed to create cart with mongoose ${error}`);
+    req.logger.error(`Failed to create cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to create cart" });
@@ -101,9 +105,9 @@ export const addToCart = async (req, res) => {
 
     if (!cid || !pid) {
       const error = CustomError.createError({
-        name: "Add product to cart error",
+        name: ErrorNames.ADD_PRODUCT_TO_CART_ERROR,
         cause: addToCartErrorInfo({ cid, pid }),
-        message: "Error trying to add product to cart",
+        message: ErrorMessages.ADD_PRODUCT_TO_CART_ERROR_MESSAGE,
         code: ErrorCodes.MISSING_DATA_ERROR,
         status: 400,
       });
@@ -123,7 +127,7 @@ export const addToCart = async (req, res) => {
       .status(201)
       .send({ status: "success", payload: productAddedToCart });
   } catch (error) {
-    console.log(`Cannot add to cart with mongoose ${error}`);
+    req.logger.error(`Cannot add to cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to add product to cart" });
@@ -160,7 +164,7 @@ export const updateCart = async (req, res) => {
       payload: updatedCart,
     });
   } catch (error) {
-    console.log(`Cannot update cart with mongoose ${error}`);
+    req.logger.error(`Cannot update cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to update cart" });
@@ -197,7 +201,7 @@ export const updateProductFromCart = async (req, res) => {
       payload: updatedProductFromCart,
     });
   } catch (error) {
-    console.log(`Cannot update cart with mongoose ${error}`);
+    req.logger.error(`Cannot update cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to update cart" });
@@ -233,7 +237,7 @@ export const deleteCart = async (req, res) => {
       payload: deletedCart,
     });
   } catch (error) {
-    console.log(`Cannot delete cart with mongoose ${error}`);
+    req.logger.error(`Cannot delete cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to delete cart" });
@@ -268,7 +272,7 @@ export const deleteProductFromCart = async (req, res) => {
       payload: deletedProductFromCart,
     });
   } catch (error) {
-    console.log(`Cannot delete cart with mongoose ${error}`);
+    req.logger.error(`Cannot delete cart with mongoose ${error}`);
     return res
       .status(500)
       .send({ status: "error", error: "Failed to delete product from cart" });

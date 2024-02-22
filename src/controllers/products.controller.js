@@ -1,7 +1,11 @@
 import { productsService } from "../services/products.service.js";
 
 import CustomError from "../services/errors/CustomError.js";
-import ErrorCodes from "../services/errors/enums.js";
+import {
+  ErrorCodes,
+  ErrorMessages,
+  ErrorNames,
+} from "../services/errors/enums.js";
 import { addProductErrorInfo } from "../services/errors/info.js";
 
 /////////////////////////
@@ -58,7 +62,7 @@ export const getProducts = async (req, res) => {
       payload: products,
     });
   } catch (error) {
-    console.log(`Cannot get products with mongoose ${error}`);
+    req.logger.error(`Cannot get products with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to get products",
@@ -90,7 +94,7 @@ export const getProductById = async (req, res) => {
       payload: filteredProduct,
     });
   } catch (error) {
-    console.log(`Cannot get product with mongoose ${error}`);
+    req.logger.error(`Cannot get product with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: `Failed to get product with id ${pid}`,
@@ -113,7 +117,7 @@ export const mockingProducts = async (req, res) => {
       payload: productsMock,
     });
   } catch (error) {
-    console.log(`Cannot get products mock, error: ${error}`);
+    req.logger.error(`Cannot get products mock, error: ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to get products mock",
@@ -141,7 +145,7 @@ export const addProduct = async (req, res, next) => {
 
     if (!title || !description || !code || !price || !stock || !category) {
       const error = CustomError.createError({
-        name: "Add product error",
+        name: ErrorNames.ADD_PRODUCT_ERROR,
         cause: addProductErrorInfo({
           title,
           description,
@@ -150,7 +154,7 @@ export const addProduct = async (req, res, next) => {
           stock,
           category,
         }),
-        message: "Error trying to create new product",
+        message: ErrorMessages.ADD_PRODUCT_ERROR_MESSAGE,
         code: ErrorCodes.MISSING_DATA_ERROR,
         status: 400,
       });
@@ -176,7 +180,7 @@ export const addProduct = async (req, res, next) => {
 
     res.status(201).send({ status: "success", payload: addedProduct });
   } catch (error) {
-    console.log(`Cannot add product with mongoose ${error}`);
+    req.logger.error(`Cannot add product with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to add product",
@@ -217,7 +221,7 @@ export const updateProduct = async (req, res) => {
       payload: updatedProduct,
     });
   } catch (error) {
-    console.log(`Cannot update product with mongoose ${error}`);
+    req.logger.error(`Cannot update product with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to update product",
@@ -254,7 +258,7 @@ export const deleteProduct = async (req, res) => {
       payload: deletedProduct,
     });
   } catch (error) {
-    console.log(`Cannot delete product with mongoose ${error}`);
+    req.logger.error(`Cannot delete product with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
       error: "Failed to delete product",

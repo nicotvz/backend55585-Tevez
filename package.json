@@ -5,9 +5,9 @@
   "main": "ProductManager.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./src/app.js",
-    "dev:mongo": "nodemon ./src/app.js -P MONGO",
-    "dev:files": "nodemon ./src/app.js -p FILESYSTEM",
+    "dev": "nodemon ./src/app.js -env DEVELOPMENT",
+    "dev:mongo": "nodemon ./src/app.js -P MONGO -env DEVELOPMENT",
+    "dev:files": "nodemon ./src/app.js -p FILESYSTEM -env DEVELOPMENT",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "postcss ./src/public/css/tailwind.css -o ./src/public/css/styles.css",
     "watch-css": "npx tailwindcss -i ./src/public/css/tailwind.css -o ./src/public/css/styles.css --watch"
@@ -46,7 +46,8 @@
     "socket.io": "^4.7.2",
     "sweetalert2": "^11.10.1",
     "tailwindcss": "^3.3.6",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
   },
   "nodemonConfig": {
     "ignore": [
