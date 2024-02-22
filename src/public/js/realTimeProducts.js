@@ -17,7 +17,7 @@ addProductForm.addEventListener("submit", (e) => {
     formData.append("thumbnails", thumbnails[i]);
   }
 
-  fetch(`/api/products`, {
+  fetch(`/api/v1/products`, {
     method: "POST",
     body: formData,
   });
@@ -26,7 +26,7 @@ addProductForm.addEventListener("submit", (e) => {
 deleteProductForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const productId = document.getElementById("pid").value;
-  fetch(`/api/products/${productId}`, {
+  fetch(`/api/v1/products/${productId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ addToCartForms.forEach((form) => {
     const productId = form.getAttribute("id").split("-")[1];
     const prodTitle = form.closest("div").querySelector("h5").textContent;
 
-    fetch(`/api/carts/${cartId}/product/${productId}`, {
+    fetch(`/api/v1/carts/${cartId}/product/${productId}`, {
       method: "POST",
     })
       .then(() => {
@@ -51,6 +51,8 @@ addToCartForms.forEach((form) => {
           toast: true,
           position: "top-right",
           icon: "success",
+          timer: 2000,
+          timerProgressBar: true,
           customClass: {
             popup: "!text-slate-200 !bg-slate-800/90 !rounded-3xl",
             confirmButton: "!bg-blue-600 !px-5",
@@ -64,7 +66,7 @@ addToCartForms.forEach((form) => {
 
 createCartForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  fetch(`/api/carts`, {
+  fetch(`/api/v1/carts`, {
     method: "POST",
   })
     .then((response) => {

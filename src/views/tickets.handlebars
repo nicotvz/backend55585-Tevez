@@ -1,0 +1,93 @@
+<div id="app" class="p-4 bg-slate-800/95 h-auto">
+  <nav class="mb-4 py-8 bg-gray-900/80 rounded-md">
+    <ul class="flex flex-row justify-evenly">
+      <li>
+        <a href="/home">
+          <button
+            class="text-slate-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-2 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-2"
+          >Home 🏚️</button>
+        </a>
+      </li>
+      <li>
+        <a href="/chat">
+          <button
+            class="text-slate-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-2 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-2"
+          >Chat 💬</button>
+        </a>
+      </li>
+      <li>
+        <a href="/profile">
+          <button
+            class="text-slate-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-2 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-2"
+          >Profile 👨‍💻</button>
+        </a>
+      </li>
+      <li>
+        <a href="/cart/{{user.cart}}">
+          <button
+            class="text-slate-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-2 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-2"
+          >My Cart 🛒</button>
+        </a>
+      </li>
+      <li>
+        <a href="/tickets">
+          <button
+            class="text-slate-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-2 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mr-2"
+          >My Orders 🎫</button>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <h1 class="flex p-2 justify-center font-mono text-2xl text-slate-200">Your
+    Orders</h1>
+  {{#if userTickets}}
+    <div
+      id="ticketsDetail"
+      class="flex flex-col flex-wrap justify-center m-6 content-center"
+    >
+      {{#each userTickets}}
+        <div
+          class="max-w-5xl border rounded-lg shadow bg-gray-700/50 border-gray-600 my-2"
+          id="{{this._id}}"
+        >
+          <div class="flex flex-wrap p-2">
+            <div class="px-5 mt-2">
+              <h5
+                class="text-xl font-semibold tracking-tight text-white text-center"
+              >Order code: {{this.code}}</h5>
+              <p class="font-light tracking-tight text-white my-1">Purchase
+                date:
+                {{this.purchase_datetime}}</p>
+              {{! ciclo 2 }}
+              {{#each this.products}}
+                <p class="tracking-tight text-teal-300 my-1">{{this.quantity}}
+                  x
+                  {{this.productId.title}}
+                  - $
+                  {{this.productId.price}}
+                  ea.</p>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <h3
+      class="flex p-3 justify-center font-mono text-xl text-slate-200 bg-sky-800 my-6 mx-24 rounded-md"
+    >Right now, you have no orders made. Go get some Hardware!</h3>
+  {{/if}}
+
+</div>
+<div class="w-auto mx-2">
+  <br /><hr /><br />
+</div>
+<div class="flex justify-around w-auto m-2 bg-gray-800 px-4 py-4">
+  <h3 class="flex p-2 justify-center font-mono text-lg text-slate-200">Views
+    done by Nicolas Brusco</h3>
+</div>
+<script
+  src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+"
+></script>

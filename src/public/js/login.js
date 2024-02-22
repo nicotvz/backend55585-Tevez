@@ -1,4 +1,24 @@
 const form = document.getElementById("loginForm");
+const ghBtn = document.getElementById("ghBtn");
+const rememberMe = document.getElementById("rememberMe");
+
+ghBtn.addEventListener("click", (e) => {
+  if (e.target.matches("#ghBtn")) {
+    Swal.fire({
+      title: "Processing login.",
+      text: "Please, stand by...",
+      allowOutsideClick: false,
+      icon: "info",
+      customClass: {
+        popup: "!text-slate-200 !bg-slate-800/90 !rounded-3xl",
+        confirmButton: "!bg-blue-600 !px-5",
+        timerProgressBar: "!m-auto !h-1 !my-2 !bg-blue-600/90 !rounded-3xl",
+      },
+      timer: 3000,
+      timerProgressBar: true,
+    });
+  }
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -8,7 +28,9 @@ form.addEventListener("submit", async (e) => {
 
   data.forEach((value, key) => (obj[key] = value));
 
-  let response = await fetch("/api/sessions/login", {
+  obj["rememberMe"] = rememberMe.checked;
+
+  let response = await fetch("/api/v1/users/login", {
     method: "POST",
     body: JSON.stringify(obj),
     headers: {
@@ -16,12 +38,10 @@ form.addEventListener("submit", async (e) => {
     },
   });
 
-  let result = await response.json();
-
-  if (result.status === "success") {
+  if (response.ok) {
     Swal.fire({
       title: "Login successful!",
-      text: `${result.message}. Welcome!`,
+      text: `${response.statusText}. Welcome!`,
       allowOutsideClick: false,
       icon: "success",
       customClass: {
@@ -38,7 +58,7 @@ form.addEventListener("submit", async (e) => {
   } else {
     Swal.fire({
       title: "Login error!",
-      text: `${result.error}... Please try again!`,
+      text: `${response.statusText}... Please try again!`,
       allowOutsideClick: false,
       icon: "error",
       customClass: {
