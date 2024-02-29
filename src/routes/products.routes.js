@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploader } from "../utils/utils.js";
+import { uploader } from "../utils.js";
 import { verifyRole } from "../middlewares/auth.js";
 import {
   addProduct,
@@ -21,7 +21,7 @@ productsRouter.get("/", getProducts);
 productsRouter.get("/:pid", getProductById);
 productsRouter.post(
   "/",
-  (req, res, next) => verifyRole(req, res, next, "admin"),
+  (req, res, next) => verifyRole(req, res, next, ["admin", "premium"]),
   uploader.array("thumbnails"),
   addProduct
 );
@@ -32,7 +32,7 @@ productsRouter.put(
 );
 productsRouter.delete(
   "/:pid",
-  (req, res, next) => verifyRole(req, res, next, "admin"),
+  (req, res, next) => verifyRole(req, res, next, ["admin", "premium"]),
   deleteProduct
 );
 

@@ -33,10 +33,20 @@ export default class UsersRepository {
     }
   };
 
-  updatePassword = async (query, update) => {
+  updateUser = async (query, update) => {
     try {
-      const updatedUser = await this.dao.updatePassword(query, update);
+      const updatedUser = await this.dao.updateUser(query, update);
       return updatedUser;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  deleteUser = async (userId) => {
+    try {
+      const deletedUser = await this.dao.deleteUser(userId);
+      return deletedUser;
     } catch (error) {
       console.log(error);
       return null;

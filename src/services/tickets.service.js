@@ -1,22 +1,21 @@
 import { v4 as uuidv4 } from "uuid";
-import { transport } from "../config/nodemailer.js";
-import config from "../config/config.js";
 import {
   ticketsRepository,
   cartsRepository,
   usersRepository,
   productsRepository,
 } from "../repositories/index.js";
+import { emailTemplates } from "../mail/templates.js";
 
-const { EMAIL_USER } = config;
-
-class TicketService {
-  constructor() {}
+export default class TicketService {
+  constructor(mailService) {
+    this.mailService = mailService;
+  }
 
   async getTickets() {
     try {
       const tickets = await ticketsRepository.getTickets();
-      if (!tickets) throw new Error(`No tickets found`);
+      if (!tickets) throw new Error("No tickets found");
 
       return tickets;
     } catch (error) {
@@ -28,8 +27,9 @@ class TicketService {
   async getTicketById(tid) {
     try {
       const filteredTicket = await ticketsRepository.getTicketById(tid);
-      if (!filteredTicket)
+      if (!filteredTicket) {
         throw new Error(`Ticket with id: ${tid} does not exist`);
+      }
 
       return filteredTicket;
     } catch (error) {
@@ -41,8 +41,9 @@ class TicketService {
   async getTicketsByEmail(email) {
     try {
       const filteredTickets = await ticketsRepository.getTicketsByEmail(email);
-      if (!filteredTickets)
+      if (!filteredTickets) {
         throw new Error(`No tickets with email: ${email} exist`);
+      }
 
       return filteredTickets;
     } catch (error) {
@@ -64,8 +65,9 @@ class TicketService {
           if (qty > stock) {
             const deletedProductFromCart =
               cartsRepository.deleteProductFromCart(cid, pid);
-            if (!deletedProductFromCart)
+            if (!deletedProductFromCart) {
               throw new Error(`Error deleting product ${pid} from cart ${cid}`);
+            }
             console.warn(`Product ${title} is out of stock. Removed from cart`);
           } else {
             products.push({
@@ -76,8 +78,9 @@ class TicketService {
 
             const deletedProductFromCart =
               cartsRepository.deleteProductFromCart(cid, pid);
-            if (!deletedProductFromCart)
+            if (!deletedProductFromCart) {
               throw new Error(`Error deleting product ${pid} from cart ${cid}`);
+            }
 
             const newStock = { stock: stock - qty };
             productsRepository.updateProduct(pid, newStock);
@@ -86,12 +89,12 @@ class TicketService {
         }
       );
 
-      if (products.length === 0)
+      if (products.length === 0) {
         throw new Error("All products were out of stock.");
-      console.log(products);
+      }
 
       const code = uuidv4();
-      const purchase_datetime = new Date().toLocaleString();
+      const purchase_datetime = new Date();
       const { email: purchaser } = await usersRepository.getUserByCartId(cid);
 
       const ticket = {
@@ -105,30 +108,23 @@ class TicketService {
       const newTicket = await ticketsRepository.createTicket(ticket);
       if (!newTicket) throw new Error("Error creating new ticket");
 
+      const mail = {
+        to: purchaser,
+        subject: `NGaming order ${code}`,
+        html: emailTemplates.newTicketEmail(
+          purchaser,
+          code,
+          purchase_datetime.toLocaleString(),
+          ammount
+        ),
+      };
+
+      await this.mailService.sendEmail(mail);
+
       return newTicket;
     } catch (error) {
       console.log(`Failed to create ticket with error: ${error}`);
       throw error;
     }
   }
-
-  async sendTicketEmail(mail) {
-    try {
-      const sentEmail = await transport.sendMail({
-        from: `NGaming ${EMAIL_USER}`,
-        to: mail.email,
-        subject: mail.subject,
-        html: mail.html,
-      });
-
-      if (!sentEmail) throw new Error(`Email send failure`);
-
-      return sentEmail;
-    } catch (error) {
-      console.log(`Failed to send email with error: ${error}`);
-      throw error;
-    }
-  }
 }
-
-export const ticketsService = new TicketService();

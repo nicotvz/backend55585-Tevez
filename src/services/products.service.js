@@ -1,7 +1,13 @@
+import jwt from "jsonwebtoken";
+import { config } from "../config/config.js";
 import { faker } from "@faker-js/faker";
 import { productsRepository } from "../repositories/index.js";
 
-class ProductService {
+const {
+  jwt: { JWT_SECRET },
+} = config;
+
+export default class ProductService {
   constructor() {}
 
   async getProducts(page, limit, category, available, sort) {
@@ -25,8 +31,9 @@ class ProductService {
   async getProductById(pid) {
     try {
       const filteredProduct = await productsRepository.getProductById(pid);
-      if (!filteredProduct)
+      if (!filteredProduct) {
         throw new Error(`Product with id: ${pid} does not exist`);
+      }
 
       return filteredProduct;
     } catch (error) {
@@ -42,7 +49,8 @@ class ProductService {
     price,
     stock,
     category,
-    thumbnails
+    thumbnails,
+    token
   ) {
     try {
       const productObj = {
@@ -53,7 +61,13 @@ class ProductService {
         stock,
         category,
         thumbnails,
+        owner: "admin",
       };
+
+      const { role, email } = jwt.verify(token, JWT_SECRET, {
+        ignoreExpiration: true,
+      });
+      role === "premium" ? (productObj.owner = email) : null;
 
       const addedProduct = await productsRepository.addProduct(productObj);
       if (!addedProduct) throw new Error("Error adding new product");
@@ -71,8 +85,9 @@ class ProductService {
         updateId,
         updateProd
       );
-      if (!updatedProduct)
+      if (!updatedProduct) {
         throw new Error(`Error updating product with id: ${updateId}`);
+      }
 
       return updatedProduct;
     } catch (error) {
@@ -81,11 +96,21 @@ class ProductService {
     }
   }
 
-  async deleteProduct(deleteId) {
+  async deleteProduct(deleteId, token) {
     try {
+      const { role, email } = jwt.verify(token, JWT_SECRET, {
+        ignoreExpiration: true,
+      });
+      const { owner } = await productsRepository.getProductById(deleteId);
+      if (role === "premium" && email !== owner) {
+        throw new Error("You can only delete products you own");
+      }
+
       const deletedProduct = await productsRepository.deleteProduct(deleteId);
-      if (!deletedProduct)
+      if (!deletedProduct) {
         throw new Error(`Error deleting product with id: ${deleteId}`);
+      }
+
       return deletedProduct;
     } catch (error) {
       console.log(`Failed to delete product with error: ${error}`);
@@ -123,5 +148,3 @@ class ProductService {
     }
   }
 }
-
-export const productsService = new ProductService();

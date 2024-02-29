@@ -1,12 +1,12 @@
 import { productModel } from "./models/products.model.js";
-import socket from "../../socket.js";
+// import socket from "../../socket.js";
 
 class Product {
   constructor() {}
 
   getProducts = async (page, limit, category, available, sort) => {
     try {
-      let queries = {};
+      const queries = {};
       category ? (queries.category = category.toUpperCase()) : null;
       available ? (queries.status = available.toLowerCase()) : null;
       parseInt(sort) === 1 ? (sort = { price: 1 }) : null;
@@ -58,7 +58,7 @@ class Product {
 
       const newProduct = await productModel.create(product);
 
-      socket.io.emit("product_add", newProduct);
+      // socket.io.emit("product_add", newProduct);
 
       return newProduct;
     } catch (error) {
@@ -80,7 +80,7 @@ class Product {
 
   deleteProduct = async (deleteId) => {
     try {
-      socket.io.emit("product_remove", deleteId);
+      // socket.io.emit("product_remove", deleteId);
       const deletedProduct = await productModel.deleteOne({ _id: deleteId });
       return deletedProduct;
     } catch (error) {

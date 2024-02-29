@@ -25,7 +25,7 @@ class Cart {
 
   addToCart = async (cartId, productId, quantity) => {
     try {
-      let cartFound = await cartModel.findOne({ _id: cartId });
+      const cartFound = await cartModel.findOne({ _id: cartId });
 
       const productIdInCart = cartFound.products.findIndex((product) => {
         return product.productId._id.toString() === productId;
@@ -40,8 +40,8 @@ class Cart {
         return updatedCartWithProduct;
       } else {
         const productAddToCart = {
-          productId: productId,
-          quantity: quantity ? quantity : 1,
+          productId,
+          quantity: quantity || 1,
         };
         await cartModel.updateOne(
           { _id: cartId },
@@ -59,7 +59,7 @@ class Cart {
     try {
       const updatedCart = await cartModel.updateOne(
         { _id: cartId },
-        { products: products }
+        { products }
       );
       return updatedCart;
     } catch (error) {
@@ -92,7 +92,7 @@ class Cart {
     try {
       const updatedCart = await cartModel.updateOne(
         { _id: cartId },
-        { $pull: { products: { productId: productId } } }
+        { $pull: { products: { productId } } }
       );
       return updatedCart;
     } catch (error) {

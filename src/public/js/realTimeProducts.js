@@ -17,7 +17,7 @@ addProductForm.addEventListener("submit", (e) => {
     formData.append("thumbnails", thumbnails[i]);
   }
 
-  fetch(`/api/v1/products`, {
+  fetch("/api/v1/products", {
     method: "POST",
     body: formData,
   });
@@ -66,7 +66,7 @@ addToCartForms.forEach((form) => {
 
 createCartForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  fetch(`/api/v1/carts`, {
+  fetch("/api/v1/carts", {
     method: "POST",
   })
     .then((response) => {
@@ -95,7 +95,7 @@ goToCartBtn.addEventListener("click", () => {
 });
 
 socket.on("product_add", (product) => {
-  let addedProduct = document.createElement("div");
+  const addedProduct = document.createElement("div");
   addedProduct.classList.add(
     "max-w-sm",
     "border",

@@ -1,7 +1,13 @@
 import { Router } from "express";
 import passport from "passport";
 
-import { checkLogged, isProtected, verifyRole } from "../middlewares/auth.js";
+import {
+  checkLogged,
+  isProtected,
+  verifyRole,
+  verifyPassRestoreJwt,
+} from "../middlewares/auth.js";
+
 import {
   cartView,
   chatView,
@@ -12,6 +18,7 @@ import {
   realTimeProductsView,
   registerView,
   restorePasswordView,
+  resetPasswordView,
   ticketsView,
 } from "../controllers/views.controller.js";
 
@@ -30,6 +37,8 @@ viewsRouter.get(
 
 viewsRouter.get("/restore", restorePasswordView);
 
+viewsRouter.get("/resetPassword", verifyPassRestoreJwt, resetPasswordView);
+
 viewsRouter.get(
   "/home",
   isProtected,
@@ -47,7 +56,7 @@ viewsRouter.get(
 viewsRouter.get(
   "/cart/:cid",
   isProtected,
-  (req, res, next) => verifyRole(req, res, next, "user"),
+  (req, res, next) => verifyRole(req, res, next, ["user", "premium"]),
   passport.authenticate("jwt", { session: false }),
   cartView
 );
@@ -55,12 +64,12 @@ viewsRouter.get(
 viewsRouter.get(
   "/tickets",
   isProtected,
-  (req, res, next) => verifyRole(req, res, next, "user"),
+  (req, res, next) => verifyRole(req, res, next, ["user", "premium"]),
   passport.authenticate("jwt", { session: false }),
   ticketsView
 );
 
-//////////////////////////////////////////////////////
+/// ///////////////////////////////////////////////////
 
 viewsRouter.get(
   "/realtimeproducts",
@@ -72,7 +81,7 @@ viewsRouter.get(
 viewsRouter.get(
   "/chat",
   isProtected,
-  (req, res, next) => verifyRole(req, res, next, "user"),
+  (req, res, next) => verifyRole(req, res, next, ["user", "premium"]),
   passport.authenticate("jwt", { session: false }),
   chatView
 );

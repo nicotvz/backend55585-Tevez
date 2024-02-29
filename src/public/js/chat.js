@@ -42,14 +42,14 @@ Swal.fire({
 chatBox.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     if (chatBox.value.trim().length > 0) {
-      socket.emit("add-message", { user: user, message: chatBox.value });
+      socket.emit("add-message", { user, message: chatBox.value });
       chatBox.value = "";
     }
   }
 });
 
 socket.on("message_add", (message) => {
-  let addedMessage = document.createElement("div");
+  const addedMessage = document.createElement("div");
   addedMessage.classList.add(
     "flex",
     "flex-row",

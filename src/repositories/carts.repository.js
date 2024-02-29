@@ -25,7 +25,7 @@ export default class CartsRepository {
 
   addToCart = async (cartId, productId, quantity) => {
     try {
-      let result = await this.dao.addToCart(cartId, productId, quantity);
+      const result = await this.dao.addToCart(cartId, productId, quantity);
       return result;
     } catch (error) {
       console.log(error);

@@ -1,7 +1,9 @@
-import { productsService } from "../services/products.service.js";
-import { cartsService } from "../services/carts.service.js";
-import { messagesService } from "../services/messages.service.js";
-import { ticketsService } from "../services/tickets.service.js";
+import {
+  productService,
+  cartService,
+  messageService,
+  ticketService,
+} from "../services/index.js";
 
 export const loginView = (req, res) => {
   res.render("login", {
@@ -27,9 +29,15 @@ export const profileView = (req, res) => {
 
 export const restorePasswordView = (req, res) => {
   res.render("restore", {
-    user: req.user,
     style: "styles.css",
     title: "NGaming - Password Restore",
+  });
+};
+
+export const resetPasswordView = (req, res) => {
+  res.render("resetPassword", {
+    style: "styles.css",
+    title: "NGaming - Password Reset",
   });
 };
 
@@ -42,7 +50,7 @@ export const homeView = async (req, res) => {
       hasNextPage,
       nextPage,
       prevPage,
-    } = await productsService.getProducts(
+    } = await productService.getProducts(
       page,
       limit,
       category,
@@ -71,7 +79,7 @@ export const homeView = async (req, res) => {
 export const productView = async (req, res) => {
   try {
     const { pid } = req.params;
-    const product = await productsService.getProductById(pid);
+    const product = await productService.getProductById(pid);
 
     if (!product) {
       return res.status(404).render("error", {
@@ -98,7 +106,7 @@ export const productView = async (req, res) => {
 export const cartView = async (req, res) => {
   try {
     const { cid } = req.params;
-    const cart = await cartsService.getCartById(cid);
+    const cart = await cartService.getCartById(cid);
     res.render("cart", {
       cart,
       style: "styles.css",
@@ -123,7 +131,7 @@ export const cartView = async (req, res) => {
 export const ticketsView = async (req, res) => {
   try {
     const { email } = req.user;
-    const userTickets = await ticketsService.getTicketsByEmail(email);
+    const userTickets = await ticketService.getTicketsByEmail(email);
     userTickets.forEach((ticket) => {
       const date = new Date(ticket.purchase_datetime).toLocaleString();
       ticket.purchase_datetime = date;
@@ -150,7 +158,7 @@ export const ticketsView = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
+/// ///////////////////////////////////////////////////
 
 export const realTimeProductsView = async (req, res) => {
   try {
@@ -161,7 +169,7 @@ export const realTimeProductsView = async (req, res) => {
       hasNextPage,
       nextPage,
       prevPage,
-    } = await productsService.getProducts(
+    } = await productService.getProducts(
       page,
       limit,
       category,
@@ -189,7 +197,7 @@ export const realTimeProductsView = async (req, res) => {
 
 export const chatView = async (req, res) => {
   try {
-    const messages = await messagesService.getMessages();
+    const messages = await messageService.getMessages();
     res.render("chat", {
       messages,
       style: "styles.css",

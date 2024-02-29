@@ -29,7 +29,7 @@ export const compare = (value1, operator, value2, options) => {
       return a >= b;
     },
     typeof: function (a, b) {
-      return typeof a == b;
+      return typeof a === b;
     },
   };
 

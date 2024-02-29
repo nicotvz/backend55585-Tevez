@@ -1,8 +1,8 @@
-import { ticketsService } from "../services/tickets.service.js";
+import { ticketService } from "../services/index.js";
 
 export const getTickets = async (req, res) => {
   try {
-    const tickets = await ticketsService.getTickets();
+    const tickets = await ticketService.getTickets();
 
     if (!tickets) {
       return res.status(404).send({
@@ -35,7 +35,7 @@ export const getTicketById = async (req, res) => {
       });
     }
 
-    const filteredTicket = await ticketsService.getTicketById(tid);
+    const filteredTicket = await ticketService.getTicketById(tid);
 
     if (!filteredTicket) {
       return res.status(404).send({
@@ -68,7 +68,7 @@ export const getTicketsByEmail = async (req, res) => {
       });
     }
 
-    const filteredTicket = await ticketsService.getTicketsByEmail(email);
+    const filteredTicket = await ticketService.getTicketsByEmail(email);
 
     if (!filteredTicket) {
       return res.status(404).send({
@@ -85,7 +85,7 @@ export const getTicketsByEmail = async (req, res) => {
     req.logger.error(`Cannot get ticket with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
-      error: "Failed to get ticket",
+      error: "Failed to get tickets",
     });
   }
 };
@@ -100,7 +100,7 @@ export const sendTicketEmail = async (req, res) => {
       });
     }
 
-    const sentEmail = await ticketsService.sendTicketEmail(mail);
+    const sentEmail = await ticketService.sendTicketEmail(mail);
 
     if (!sentEmail) {
       return res.status(404).send({

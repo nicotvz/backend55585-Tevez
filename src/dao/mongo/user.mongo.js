@@ -30,11 +30,19 @@ class User {
     }
   };
 
-  updatePassword = async (query, update) => {
+  updateUser = async (query, update) => {
     try {
       const updatedUser = await userModel.updateOne(query, update);
-      console.log("Password updated successfully!");
       return updatedUser;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteUser = async (userId) => {
+    try {
+      const deletedUser = await userModel.deleteOne({ _id: userId });
+      return deletedUser;
     } catch (error) {
       console.log(error);
     }

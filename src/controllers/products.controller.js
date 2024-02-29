@@ -1,4 +1,4 @@
-import { productsService } from "../services/products.service.js";
+import { productService } from "../services/index.js";
 
 import CustomError from "../services/errors/CustomError.js";
 import {
@@ -8,9 +8,9 @@ import {
 } from "../services/errors/enums.js";
 import { addProductErrorInfo } from "../services/errors/info.js";
 
-/////////////////////////
-///////GET METHODS///////
-/////////////////////////
+/// //////////////////////
+/// ////GET METHODS///////
+/// //////////////////////
 
 export const getProducts = async (req, res) => {
   try {
@@ -43,7 +43,7 @@ export const getProducts = async (req, res) => {
       });
     }
 
-    const products = await productsService.getProducts(
+    const products = await productService.getProducts(
       page,
       limit,
       category,
@@ -51,11 +51,12 @@ export const getProducts = async (req, res) => {
       sort
     );
 
-    if (!products)
+    if (!products) {
       return res.status(404).send({
         status: "error",
-        error: `No products found`,
+        error: "No products found",
       });
+    }
 
     res.status(200).send({
       status: "success",
@@ -81,13 +82,14 @@ export const getProductById = async (req, res) => {
       });
     }
 
-    const filteredProduct = await productsService.getProductById(pid);
+    const filteredProduct = await productService.getProductById(pid);
 
-    if (!filteredProduct || filteredProduct == 0)
+    if (!filteredProduct || filteredProduct == 0) {
       return res.status(404).send({
         status: "error",
         error: `Product with ID ${pid} was not found`,
       });
+    }
 
     return res.status(200).send({
       status: "success",
@@ -97,20 +99,21 @@ export const getProductById = async (req, res) => {
     req.logger.error(`Cannot get product with mongoose ${error}`);
     return res.status(500).send({
       status: "error",
-      error: `Failed to get product with id ${pid}`,
+      error: "Failed to get product",
     });
   }
 };
 
 export const mockingProducts = async (req, res) => {
   try {
-    const productsMock = await productsService.mockingProducts();
+    const productsMock = await productService.mockingProducts();
 
-    if (!productsMock)
+    if (!productsMock) {
       return res.status(404).send({
         status: "error",
         error: "Failed to get products mock",
       });
+    }
 
     return res.status(200).send({
       status: "success",
@@ -125,21 +128,29 @@ export const mockingProducts = async (req, res) => {
   }
 };
 
-/////////////////////////
-///////POST METHOD///////
-/////////////////////////
+/// //////////////////////
+/// ////POST METHOD///////
+/// //////////////////////
 
 export const addProduct = async (req, res, next) => {
   try {
     const { title, description, code, price, stock, category } = req.body;
     let { thumbnails } = req.body;
+    const { jwtCookie: token } = req.cookies;
+
+    if (!token) {
+      return res.status(400).send({
+        status: "error",
+        error: "Failed to get token",
+      });
+    }
 
     if (req.files) thumbnails = req.files;
 
     if (!req.files && !thumbnails) {
       return res.status(400).send({
         status: "error",
-        error: `Failed to save thumbnails`,
+        error: "Failed to save thumbnails",
       });
     }
 
@@ -161,14 +172,15 @@ export const addProduct = async (req, res, next) => {
       return next(error);
     }
 
-    const addedProduct = await productsService.addProduct(
+    const addedProduct = await productService.addProduct(
       title,
       description,
       code,
       price,
       stock,
       category,
-      thumbnails
+      thumbnails,
+      token
     );
 
     if (!addedProduct) {
@@ -188,9 +200,9 @@ export const addProduct = async (req, res, next) => {
   }
 };
 
-/////////////////////////
-///////PUT METHOD////////
-/////////////////////////
+/// //////////////////////
+/// ////PUT METHOD////////
+/// //////////////////////
 
 export const updateProduct = async (req, res) => {
   try {
@@ -204,7 +216,7 @@ export const updateProduct = async (req, res) => {
       });
     }
 
-    const updatedProduct = await productsService.updateProduct(
+    const updatedProduct = await productService.updateProduct(
       updateId,
       updateProd
     );
@@ -229,13 +241,21 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-/////////////////////////
-//////DELETE METHOD//////
-/////////////////////////
+/// //////////////////////
+/// ///DELETE METHOD//////
+/// //////////////////////
 
 export const deleteProduct = async (req, res) => {
   try {
     const deleteId = req.params.pid;
+    const { jwtCookie: token } = req.cookies;
+
+    if (!token) {
+      return res.status(400).send({
+        status: "error",
+        error: "Failed to get token",
+      });
+    }
 
     if (!deleteId) {
       return res.status(400).send({
@@ -244,7 +264,7 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
-    const deletedProduct = await productsService.deleteProduct(deleteId);
+    const deletedProduct = await productService.deleteProduct(deleteId, token);
 
     if (!deletedProduct || deletedProduct.deletedCount === 0) {
       return res.status(404).send({

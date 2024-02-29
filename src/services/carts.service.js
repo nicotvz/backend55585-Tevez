@@ -1,6 +1,12 @@
-import { cartsRepository } from "../repositories/index.js";
+import jwt from "jsonwebtoken";
+import { config } from "../config/config.js";
+import { cartsRepository, productsRepository } from "../repositories/index.js";
 
-class CartService {
+const {
+  jwt: { JWT_SECRET },
+} = config;
+
+export default class CartService {
   constructor() {}
 
   async getCartById(cid) {
@@ -27,15 +33,24 @@ class CartService {
     }
   }
 
-  async addToCart(cid, pid, quantity) {
+  async addToCart(cid, pid, quantity, token) {
     try {
+      const { email } = jwt.verify(token, JWT_SECRET, {
+        ignoreExpiration: true,
+      });
+      const { owner } = await productsRepository.getProductById(pid);
+      if (email === owner) {
+        throw new Error("You can't add products you own");
+      }
+
       const productAddedToCart = await cartsRepository.addToCart(
         cid,
         pid,
         quantity
       );
-      if (!productAddedToCart)
+      if (!productAddedToCart) {
         throw new Error(`Error adding product ${pid} to cart ${cid}`);
+      }
 
       return productAddedToCart;
     } catch (error) {
@@ -60,8 +75,9 @@ class CartService {
     try {
       const updatedProductFromCart =
         await cartsRepository.updateProductFromCart(cid, pid, quantity);
-      if (!updatedProductFromCart)
+      if (!updatedProductFromCart) {
         throw new Error(`Error updating product ${pid} from cart ${cid}`);
+      }
 
       return updatedProductFromCart;
     } catch (error) {
@@ -86,8 +102,9 @@ class CartService {
     try {
       const deletedProductFromCart =
         await cartsRepository.deleteProductFromCart(cid, pid);
-      if (!deletedProductFromCart)
+      if (!deletedProductFromCart) {
         throw new Error(`Error deleting product ${pid} from cart ${cid}`);
+      }
 
       return deletedProductFromCart;
     } catch (error) {
@@ -96,5 +113,3 @@ class CartService {
     }
   }
 }
-
-export const cartsService = new CartService();

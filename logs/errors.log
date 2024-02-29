@@ -21,3 +21,122 @@
 {"level":"fatal","message":"Request in test endpoint at fatal level!"}
 {"level":"error","message":"Request in test endpoint at error level!"}
 {"level":"fatal","message":"Request in test endpoint at fatal level!"}
+{"level":"error","message":"Failed to create ticket with mongoose Error: Error creating new ticket"}
+{"level":"error","message":"Failed to create ticket with mongoose Error: Error creating new ticket"}
+{"level":"error","message":"Failed to create ticket with mongoose TypeError: emailTemplates.newTicketEmail is not a function"}
+{"level":"error","message":"Failed to create ticket with mongoose TypeError: Cannot read properties of undefined (reading 'sendMail')"}
+{"level":"error","message":"Failed to create ticket with mongoose TypeError: Cannot read properties of undefined (reading 'sendMail')"}
+{"level":"error","message":"Failed to create ticket with mongoose TypeError: Cannot read properties of undefined (reading 'sendMail')"}
+{"level":"error","message":"Failed to create ticket with mongoose TypeError: this.mailService.sendMail is not a function"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot delete product with mongoose Error: Error deleting product with id: Sint est rerum ape"}
+{"level":"error","message":"Cannot delete product with mongoose Error: Error deleting product with id: Sint est rerum ape"}
+{"level":"error","message":"Failed to create ticket with mongoose Error: All products were out of stock."}
+{"level":"error","message":"Failed to create ticket with mongoose Error: All products were out of stock."}
+{"level":"error","message":"Failed to restore user password: Error: User with email [object Object] does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email [object Object] does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nicolas.tevez1@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nicolas.tevez1@hotaaamail.com does not exist"}
+{"level":"error","message":"Failed to login with error: Error: User with email nicolas.tevez1@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nicoaaalastevez@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email sadasdasd@a.a does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nicotevez@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nasdsco@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email aaad@b.c does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email aasdsadCoder@coder.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email d@b.caaa does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email d@b.caa does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email tasdtegradora@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email adminCasdsad@er.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email nicasdasrste@hotmail.com does not exist"}
+{"level":"error","message":"Failed to restore user password: Error: User with email asdasdas@asdasd does not exist"}
+{"level":"error","message":"Failed to send password reset email: Error: User with email nicolasasdasdtevez@hotmail.com does not exist"}
+{"level":"error","message":"Failed to send password reset email: Error: User with email asdasdasd@asdasdasd.com does not exist"}
+{"level":"error","message":"Failed to send password reset email: Error: User with email asdasdasd@asdasdasd.com does not exist"}
+{"level":"error","message":"Failed to send password reset email: Error: User with email nicolasassasa@otmail.com does not exist"}
+{"level":"error","message":"Failed to send password reset email: Error: User with email nicolasssasa@otmail.com does not exist"}
+{"level":"error","message":"Failed to send password reset email: ReferenceError: Cannot access 'email' before initialization"}
+{"level":"error","message":"Failed to send password reset email: ReferenceError: Cannot access 'email' before initialization"}
+{"level":"error","message":"Failed to send password reset email: ReferenceError: Cannot access 'email' before initialization"}
+{"level":"error","message":"Failed to send password reset email: Error: Something went wrong"}
+{"level":"error","message":"Failed to send password reset email: Error: Something went wrong"}
+{"level":"error","message":"Failed to send password reset email: Error: Something went wrong"}
+{"level":"error","message":"Failed to send password reset email: Error: invalid expiresIn option for string payload"}
+{"level":"error","message":"Failed to send password reset email: Error: invalid expiresIn option for string payload"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: ReferenceError: email is not defined"}
+{"level":"error","message":"Failed to restore user password: Error: Token has expired. Request another restore link."}
+{"level":"error","message":"Failed to restore user password: Error: Token has expired. Request another restore link."}
+{"level":"error","message":"Failed to restore user password: ReferenceError: passwordValidate is not defined"}
+{"level":"error","message":"Failed to restore user password: Error: data and hash arguments required"}
+{"level":"error","message":"Failed to restore user password: Error: Password must be different from the actual one."}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose Error: Error adding new product"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: token is not defined"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: token is not defined"}
+{"level":"error","message":"Cannot add product with mongoose JsonWebTokenError: jwt must be provided"}
+{"level":"error","message":"Cannot add product with mongoose JsonWebTokenError: jwt must be provided"}
+{"level":"error","message":"Cannot add product with mongoose JsonWebTokenError: jwt must be provided"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: addedProduct is not defined"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: addedProduct is not defined"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: owner is not defined"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: owner is not defined"}
+{"level":"error","message":"Cannot add product with mongoose ReferenceError: owner is not defined"}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products that you own."}
+{"level":"error","message":"Cannot add to cart with mongoose ReferenceError: jwt is not defined"}
+{"level":"error","message":"Cannot add to cart with mongoose TypeError: Assignment to constant variable."}
+{"level":"error","message":"Cannot add to cart with mongoose Error: You can't add products you own"}
+{"level":"error","message":"Cannot add to cart with mongoose Error: You can't add products you own"}
+{"level":"error","message":"Request in test endpoint at error level!"}
+{"level":"fatal","message":"Request in test endpoint at fatal level!"}
+{"level":"error","message":"Failed to change role: ReferenceError: token is not defined"}
+{"level":"error","message":"Failed to change role: ReferenceError: token is not defined"}
+{"level":"error","message":"Failed to change role: TypeError: Assignment to constant variable."}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: invalid token"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: invalid token"}
+{"level":"error","message":"Failed to restore user password: Error: Password must be different from the actual one."}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: JsonWebTokenError: jwt malformed"}
+{"level":"error","message":"Failed to restore user password: Error: Password must be different from the actual one."}
+{"level":"error","message":"Failed to restore user password: Error: Password must be different from the actual one."}
+{"level":"error","message":"Failed to login with error: Error: User with email d@b.c does not exist"}
+{"level":"error","message":"Failed to login with error: Error: User with email testintegradora@hotmail.com does not exist"}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products you own"}
+{"level":"error","message":"Cannot delete product with mongoose TypeError: Cannot destructure property 'owner' of '(intermediate value)' as it is null."}
+{"level":"error","message":"Cannot delete product with mongoose TypeError: Cannot destructure property 'owner' of '(intermediate value)' as it is null."}
+{"level":"error","message":"Cannot delete product with mongoose TypeError: Cannot destructure property 'owner' of '(intermediate value)' as it is undefined."}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products you own"}
+{"level":"error","message":"Cannot get product with mongoose Error: Product with id: 64a0611a69b50d4cb830208b does not exist"}
+{"level":"error","message":"Cannot get product with mongoose Error: Product with id: 64a0611a69b50d4cb830208b does not exist"}
+{"level":"error","message":"Cannot get product with mongoose Error: Product with id: 64a0611a69b50d4cb830208b does not exist"}
+{"level":"error","message":"Cannot delete product with mongoose TypeError: Cannot destructure property 'owner' of '(intermediate value)' as it is null."}
+{"level":"error","message":"Cannot delete product with mongoose TypeError: Cannot destructure property 'owner' of '(intermediate value)' as it is undefined."}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products you own"}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products you own"}
+{"level":"error","message":"Cannot delete product with mongoose Error: You can only delete products you own"}

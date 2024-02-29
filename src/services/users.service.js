@@ -1,15 +1,21 @@
 import jwt from "jsonwebtoken";
 
-import config from "../config/config.js";
-import { createHash, isValidPassword } from "../utils/utils.js";
+import { config } from "../config/config.js";
+import { createHash, isValidPassword } from "../utils.js";
 
 import { usersRepository } from "../repositories/index.js";
 import UserDTO from "../dao/dtos/user.dto.js";
 
-const { JWT_SECRET } = config;
+import { emailTemplates } from "../mail/templates.js";
 
-class UserService {
-  constructor() {}
+const {
+  jwt: { JWT_SECRET },
+} = config;
+
+export default class UserService {
+  constructor(mailService) {
+    this.mailService = mailService;
+  }
 
   async getUser(email) {
     try {
@@ -30,6 +36,16 @@ class UserService {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  }
+
+  async checkExistingUser(email) {
+    try {
+      const user = await usersRepository.getUser({ email });
+      if (user) throw new Error(`User with email ${email} already exists`);
+      return user;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -56,24 +72,116 @@ class UserService {
     }
   }
 
-  async updatePassword(email, password) {
+  async registerUser(newUser) {
     try {
+      const user = await usersRepository.registerUser(newUser);
+      if (!user) throw new Error("Error trying to create user");
+
+      const userDTO = new UserDTO(user);
+      const { email, name, role } = userDTO;
+
+      const mail = {
+        to: email,
+        subject: `Welcome to NGaming ${name}!`,
+        html: emailTemplates.newUserGreetingEmail(name, role),
+      };
+
+      await this.mailService.sendEmail(mail);
+
+      return user;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async restorePasswordProcess(email) {
+    try {
+      const user = await usersRepository.getUser({ email });
+      if (!user) throw new Error("Something went wrong");
+
+      const userDTO = new UserDTO(user);
+      const { name } = userDTO;
+
+      const token = jwt.sign({ email }, JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      if (!token) throw new Error("Auth token signing failed");
+
+      const mail = {
+        to: email,
+        subject: `Your NGaming password restore, ${name}!`,
+        html: emailTemplates.passwordRestoreEmail(email, name, token),
+      };
+
+      await this.mailService.sendEmail(mail);
+    } catch (error) {
+      console.log(`Failed to send email: ${error}`);
+      throw error;
+    }
+  }
+
+  async updatePassword(token, password) {
+    try {
+      const decodedToken = jwt.verify(token, JWT_SECRET, {
+        ignoreExpiration: true,
+      });
+      const { email } = decodedToken;
+      if (Date.now() / 1000 > decodedToken.exp) {
+        throw new Error("Token has expired. Request another restore link.");
+      }
+
+      const user = await usersRepository.getUser({ email });
+      const samePass = this.passwordValidate(user, password);
+      if (samePass) {
+        throw new Error("Password must be different from the actual one.");
+      }
+
       const hashedPassword = createHash(password);
       if (!hashedPassword) throw new Error("Password hashing failed");
 
-      const passwordUpdate = await usersRepository.updatePassword(
+      const passwordUpdate = await usersRepository.updateUser(
         { email },
         { password: hashedPassword }
       );
-      if (!passwordUpdate)
-        throw new Error(`Password update failed for user with email ${email}`);
-
+      if (!passwordUpdate) {
+        throw new Error(`Password update failed for ${email}`);
+      }
       return passwordUpdate;
     } catch (error) {
       console.log(`Failed to update password: ${error}`);
       throw error;
     }
   }
-}
 
-export const userService = new UserService();
+  async changeRole(uid) {
+    try {
+      let { role } = await usersRepository.getUser({ _id: uid });
+      role === "user" ? (role = "premium") : "user";
+
+      const roleChanged = await usersRepository.updateUser(
+        { _id: uid },
+        { role }
+      );
+      if (!roleChanged) {
+        throw new Error(`Failed to change role for user ${uid}`);
+      }
+      return roleChanged;
+    } catch (error) {
+      console.log(`Failed to change role: ${error}`);
+      throw error;
+    }
+  }
+
+  async deleteUser(uid) {
+    try {
+      const deletedUser = await usersRepository.deleteUser(uid);
+      if (!deletedUser) throw new Error(`Error deleting user ${uid}`);
+
+      return deletedUser;
+    } catch (error) {
+      console.log(`Failed to delete user with error: ${error}`);
+      throw error;
+    }
+  }
+}

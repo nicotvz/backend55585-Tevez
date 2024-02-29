@@ -5,7 +5,7 @@ const socket = {};
 socket.connect = (server) => {
   socket.io = new Server(server);
 
-  let { io } = socket;
+  const { io } = socket;
 
   io.on("connection", async (socket) => {
     const { productsRepository, messagesRepository } = await import(

@@ -1,13 +1,14 @@
-import { messagesService } from "../services/messages.service.js";
+import { messageService } from "../services/index.js";
 
 export const getMessages = async (req, res) => {
   try {
-    const messages = await messagesService.getMessages();
+    const messages = await messageService.getMessages();
 
-    if (!messages)
+    if (!messages) {
       return res
         .status(404)
         .send({ status: "error", error: "Messages not found" });
+    }
 
     return res.status(200).send({ status: "success", payload: messages });
   } catch (error) {

@@ -1,0 +1,720 @@
+{
+  "info": {
+    "_postman_id": "6dd0ef14-cc09-427f-b2f7-1cdbb265a714",
+    "name": "backend55585-Tevez",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26212110"
+  },
+  "item": [
+    {
+      "name": "carts",
+      "item": [
+        {
+          "name": "get-cart-id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/6460770e9d94f3d716abd6a9",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "carts", "6460770e9d94f3d716abd6a9"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create-cart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "carts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create-ticket",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/6460771a9d94f3d716abd6ae/purchase",
+              "host": ["{{lh8080}}"],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "6460771a9d94f3d716abd6ae",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add-to-cart",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/6460770e9d94f3d716abd6a9/product/6436254068bc7b308a74cdbb",
+              "host": ["{{lh8080}}"],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "6460770e9d94f3d716abd6a9",
+                "product",
+                "6436254068bc7b308a74cdbb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update-cart",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n    {\r\n        \"productId\": \"6436254068bc7b308a74cdbb\",\r\n        \"quantity\": 2\r\n    },\r\n    {\r\n        \"productId\": \"642c8adb6dbaaa8e907e0140\",\r\n        \"quantity\": 14\r\n    }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/646726a6d1ffaae3e5337112",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "carts", "646726a6d1ffaae3e5337112"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update-product-from-cart",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\": 15\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/646726a6d1ffaae3e5337112/product/642c8adb6dbaaa8e907e0140",
+              "host": ["{{lh8080}}"],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "646726a6d1ffaae3e5337112",
+                "product",
+                "642c8adb6dbaaa8e907e0140"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete-cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/646726a6d1ffaae3e5337112",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "carts", "646726a6d1ffaae3e5337112"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete-product-from-cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/carts/646726a6d1ffaae3e5337112/product/642c8adb6dbaaa8e907e0140",
+              "host": ["{{lh8080}}"],
+              "path": [
+                "api",
+                "v1",
+                "carts",
+                "646726a6d1ffaae3e5337112",
+                "product",
+                "642c8adb6dbaaa8e907e0140"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "messages",
+      "item": [
+        {
+          "name": "get-messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/messages",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "messages"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "get-products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products/642c8adb6dbaaa8e907e0140",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products", "642c8adb6dbaaa8e907e0140"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-limit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products?limit=2",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products?page=2&limit=2",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-query",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products?available=true&category=gpu",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "available",
+                  "value": "true"
+                },
+                {
+                  "key": "category",
+                  "value": "gpu"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-sort",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products?sort=1",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-all-params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products?limit=2&page=2&category=gpu&available=true&sort=1",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "2"
+                },
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "category",
+                  "value": "gpu"
+                },
+                {
+                  "key": "available",
+                  "value": "true"
+                },
+                {
+                  "key": "sort",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-products-mock",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products/mockingproducts",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products", "mockingproducts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add-product-raw",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\t{\r\n\t\t\"title\": \"Postman Test\",\r\n\t\t\"description\": \"This is a Postman Test Product\",\r\n\t\t\"code\": \"POSTMAN-TEST\",\r\n\t\t\"price\": 500,\r\n\t\t\"stock\": 50,\r\n\t\t\"category\": \"TEST\",\r\n\t\t\"thumbnails\": [\r\n\t\t\t\"http://localhost:8080/images/TEST1.jpg\",\r\n\t\t\t\"http://localhost:8080/images/TEST2.jpg\"\r\n\t\t]\r\n\t}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add-product-form",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Postman Test",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "This is a Postman Test Product",
+                  "type": "text"
+                },
+                {
+                  "key": "code",
+                  "value": "POSTMAN-TEST",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "500",
+                  "type": "text"
+                },
+                {
+                  "key": "stock",
+                  "value": "50",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "TEST",
+                  "type": "text"
+                },
+                {
+                  "key": "thumbnails",
+                  "type": "file",
+                  "src": [
+                    "/E:/Pictures/backend pictures/0074 disfraces magicos1.jpg",
+                    "/E:/Pictures/backend pictures/To the moon.jpg"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update-product",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\t{\r\n\t\t\"status\": true,\r\n\t\t\"title\": \"This is a Test Product Updated\",\r\n\t\t\"description\": \"Test Product Updated\",\r\n\t\t\"code\": \"TEST-PRODOO\",\r\n\t\t\"price\": 454560,\r\n\t\t\"stock\": 12,\r\n\t\t\"category\": \"TEST\",\r\n\t\t\"thumbnails\": [\r\n\t\t\t\"http://localhost:8080/images/image3.jpg\",\r\n\t\t\t\"http://localhost:8080/images/image4.jpg\"\r\n\t\t]\r\n\t}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products/64672787d1ffaae3e5337139",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products", "64672787d1ffaae3e5337139"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete-product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/products/64672787d1ffaae3e5337139",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "products", "64672787d1ffaae3e5337139"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users-jwt",
+      "item": [
+        {
+          "name": "current-user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/current",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "current"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user-logout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/logout",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "logout"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user-login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nicolas.tevez1@hotmail.com\",\r\n    \"password\": \"159\"\r\n}\r\n// {\r\n//     \"email\": \"adminCoder@coder.com\",\r\n//     \"password\": \"123\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/login",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user-register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"testUser@hotmail.com\",\r\n    \"password\": \"778899\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/register",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user-change-role",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/premium/6460771b9d94f3d716abd6b0",
+              "host": ["{{lh8080}}"],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "premium",
+                "6460771b9d94f3d716abd6b0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "restore-password-email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nicolas.tevez1@hotmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/restore",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "restore"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update-password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"password\": \"123\",\r\n    \"token\": \"PASTE FROM RECOVERY EMAIL\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/users/resetPassword",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "users", "resetPassword"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "tickets",
+      "item": [
+        {
+          "name": "get-tickets",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{lh8080}}/api/v1/tickets/",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "tickets", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-ticket-id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/tickets/647ab8e902c0173c94fe0f5f",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "tickets", "647ab8e902c0173c94fe0f5f"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-tickets-email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/api/v1/tickets/orders/heylo@g.t",
+              "host": ["{{lh8080}}"],
+              "path": ["api", "v1", "tickets", "orders", "heylo@g.t"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "logger",
+      "item": [
+        {
+          "name": "logger-test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{lh8080}}/loggerTest",
+              "host": ["{{lh8080}}"],
+              "path": ["loggerTest"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

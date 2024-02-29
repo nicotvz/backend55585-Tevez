@@ -1,5 +1,4 @@
-import { cartsService } from "../services/carts.service.js";
-import { ticketsService } from "../services/tickets.service.js";
+import { cartService, ticketService } from "../services/index.js";
 
 import CustomError from "../services/errors/CustomError.js";
 import {
@@ -9,9 +8,9 @@ import {
 } from "../services/errors/enums.js";
 import { addToCartErrorInfo } from "../services/errors/info.js";
 
-/////////////////////////
-///////GET METHODS///////
-/////////////////////////
+/// //////////////////////
+/// ////GET METHODS///////
+/// //////////////////////
 
 export const getCartById = async (req, res) => {
   try {
@@ -24,7 +23,7 @@ export const getCartById = async (req, res) => {
       });
     }
 
-    const filteredCart = await cartsService.getCartById(cid);
+    const filteredCart = await cartService.getCartById(cid);
 
     if (!filteredCart) {
       return res.status(404).send({
@@ -46,9 +45,9 @@ export const getCartById = async (req, res) => {
   }
 };
 
-/////////////////////////
-///////POST METHODS//////
-/////////////////////////
+/// //////////////////////
+/// ////POST METHODS//////
+/// //////////////////////
 
 export const createTicket = async (req, res) => {
   try {
@@ -61,7 +60,7 @@ export const createTicket = async (req, res) => {
       });
     }
 
-    const newTicket = await ticketsService.createTicket(cid);
+    const newTicket = await ticketService.createTicket(cid);
 
     if (!newTicket) {
       return res.status(404).send({
@@ -78,9 +77,10 @@ export const createTicket = async (req, res) => {
       .send({ status: "error", error: "Failed to create ticket" });
   }
 };
+
 export const createCart = async (req, res) => {
   try {
-    const newCart = await cartsService.createCart();
+    const newCart = await cartService.createCart();
 
     if (!newCart) {
       return res.status(404).send({
@@ -102,6 +102,14 @@ export const addToCart = async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
+    const { jwtCookie: token } = req.cookies;
+
+    if (!token) {
+      return res.status(400).send({
+        status: "error",
+        error: "Failed to get token",
+      });
+    }
 
     if (!cid || !pid) {
       const error = CustomError.createError({
@@ -114,7 +122,12 @@ export const addToCart = async (req, res) => {
       return next(error);
     }
 
-    const productAddedToCart = await cartsService.addToCart(cid, pid, quantity);
+    const productAddedToCart = await cartService.addToCart(
+      cid,
+      pid,
+      quantity,
+      token
+    );
 
     if (!productAddedToCart) {
       return res.status(404).send({
@@ -134,9 +147,9 @@ export const addToCart = async (req, res) => {
   }
 };
 
-/////////////////////////
-///////PUT METHODS///////
-/////////////////////////
+/// //////////////////////
+/// ////PUT METHODS///////
+/// //////////////////////
 
 export const updateCart = async (req, res) => {
   try {
@@ -150,7 +163,7 @@ export const updateCart = async (req, res) => {
       });
     }
 
-    const updatedCart = await cartsService.updateCart(cid, products);
+    const updatedCart = await cartService.updateCart(cid, products);
 
     if (!updatedCart) {
       return res.status(404).send({
@@ -183,7 +196,7 @@ export const updateProductFromCart = async (req, res) => {
       });
     }
 
-    const updatedProductFromCart = await cartsService.updateProductFromCart(
+    const updatedProductFromCart = await cartService.updateProductFromCart(
       cid,
       pid,
       quantity
@@ -208,9 +221,9 @@ export const updateProductFromCart = async (req, res) => {
   }
 };
 
-/////////////////////////
-//////DELETE METHODS/////
-/////////////////////////
+/// //////////////////////
+/// ///DELETE METHODS/////
+/// //////////////////////
 
 export const deleteCart = async (req, res) => {
   try {
@@ -223,7 +236,7 @@ export const deleteCart = async (req, res) => {
       });
     }
 
-    const deletedCart = await cartsService.deleteCart(cid);
+    const deletedCart = await cartService.deleteCart(cid);
 
     if (!deletedCart) {
       return res.status(404).send({
@@ -255,7 +268,7 @@ export const deleteProductFromCart = async (req, res) => {
       });
     }
 
-    const deletedProductFromCart = await cartsService.deleteProductFromCart(
+    const deletedProductFromCart = await cartService.deleteProductFromCart(
       cid,
       pid
     );
